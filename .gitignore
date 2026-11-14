@@ -1,0 +1,4 @@
+# Veri repoya girmez; src/indir.py ile yeniden indirilir.
+veri/
+__pycache__/
+.ipynb_checkpoints/
