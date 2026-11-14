@@ -1,0 +1,65 @@
+"""Çağrıyı aynı şirketin fiyat serisine bağlar.
+
+Anahtar: ticker (MAEC klasör adı = FNSPID dosya adı) + çağrı tarihi -> olay günü t0.
+Her eşleşen çağrı için t0'a göre hizalı bir fiyat penceresi kesilir:
+  gün -61 .. -1 : 60 günlük girdi serisi (60 getiri için 61 fiyat gerekir)
+  gün 0         : çağrı günü, ne girdiye ne hedefe girer
+  gün 0 .. +7   : hedef penceresi (7 getiri: +1..+7; ilk getirinin tabanı gün 0 fiyatı)
+"""
+import numpy as np
+import pandas as pd
+
+from src.veri import fiyat_oku
+
+GECMIS = 60       # girdi: t0'dan önceki işlem günü sayısı
+GELECEK = 7       # hedef: t0'dan sonraki işlem günü sayısı
+MAKS_ARA = 5      # çağrı tarihi ile t0 arasında izin verilen en fazla takvim günü
+
+
+def t0_bul(tarihler, cagri_tarihi):
+    """Çağrı tarihine eşit ya da ondan sonraki ilk işlem gününün sırası; yoksa None.
+
+    GEÇİCİ KURAL: BMO/AMC (açılış öncesi / kapanış sonrası) kararı Manus raporundan sonra verilecek.
+    """
+    i = int(tarihler.searchsorted(cagri_tarihi))
+    if i >= len(tarihler) or (tarihler[i] - cagri_tarihi).days > MAKS_ARA:
+        return None
+    return i
+
+
+def cagri_eslestir(klasor, ticker, tarih, fiyat_yollari):
+    """Bir çağrıyı eşleştirir. (durum, pencere) döner; durum 'eslesti' ya da düşme nedenidir."""
+    if ticker not in fiyat_yollari:
+        return "ticker fiyat verisinde yok", None
+    p = fiyat_oku(fiyat_yollari[ticker])
+    if p is None or p.empty:
+        return "fiyat dosyası boş", None
+    p = p.dropna(subset=["adj close"])
+    p = p[p["adj close"] > 0].reset_index(drop=True)
+    if not p["date"].iloc[0] <= tarih <= p["date"].iloc[-1]:
+        return "fiyat serisi çağrı tarihini kapsamıyor", None
+    i = t0_bul(pd.DatetimeIndex(p["date"]), pd.Timestamp(tarih))
+    if i is None:
+        return "çağrıdan sonra 5 gün içinde işlem günü yok", None
+    if i - (GECMIS + 1) < 0:
+        return "60 günlük geçmiş yetersiz", None
+    if i + GELECEK >= len(p):
+        return "7 günlük gelecek yetersiz", None
+    w = p.iloc[i - (GECMIS + 1): i + GELECEK + 1].copy()
+    w.insert(0, "gun", np.arange(-(GECMIS + 1), GELECEK + 1))
+    w.insert(0, "klasor", klasor)
+    w["getiri"] = np.log(w["adj close"]).diff()   # log getiri; gün -61'de tanımsız (NaN)
+    return "eslesti", w
+
+
+def tumunu_eslestir(cagrilar, fiyat_yollari):
+    """Tüm çağrılar için durum tablosu ve uzun biçimde (her satır bir gün) pencere tablosu döndürür."""
+    durumlar, pencereler = [], []
+    for c in cagrilar.itertuples():
+        durum, w = cagri_eslestir(c.klasor, c.ticker, c.tarih, fiyat_yollari)
+        satir = {"klasor": c.klasor, "durum": durum}
+        if w is not None:
+            satir["t0"] = w.loc[w.gun == 0, "date"].iloc[0]
+            pencereler.append(w)
+        durumlar.append(satir)
+    return pd.DataFrame(durumlar), pd.concat(pencereler, ignore_index=True)
