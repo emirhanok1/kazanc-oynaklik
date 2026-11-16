@@ -1,0 +1,12 @@
+,değer
+MAEC ham çağrı,3443
+MAEC şirket,1213
+FNSPID fiyat dosyası,7693
+eşleşen çağrı (iki modalite tam),3026
+eşleşen şirket,1055
+eşleşme oranı %,87.9
+düşen: ticker yok,411
+düşen: dosya kesik / geçmiş yetersiz,6
+sınıf düşük / orta / yüksek (tümü),1081/948/997
+sınıf düşük / orta / yüksek (eğitim ≤2016),629/628/629
+metni <100 kelime (eşleşenlerde),83

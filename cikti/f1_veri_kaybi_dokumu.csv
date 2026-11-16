@@ -1,0 +1,8 @@
+adım,düşen,kalan,kalan_%
+MAEC çağrısı (başlangıç),0,3443,100.0
+ticker fiyat verisinde yok,411,3032,88.1
+fiyat dosyası boş,0,3032,88.1
+fiyat serisi çağrı tarihini kapsamıyor,5,3027,87.9
+çağrıdan sonra 5 gün içinde işlem günü yok,0,3027,87.9
+60 günlük geçmiş yetersiz,1,3026,87.9
+7 günlük gelecek yetersiz,0,3026,87.9
