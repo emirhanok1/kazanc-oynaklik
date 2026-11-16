@@ -1,0 +1,4 @@
+modalite,ham,kullanılabilir
+Metin (MAEC text.txt),3.443 çağrı,3.419 çağrı (≤5 kelimelik 24 metin fiilen boş)
+Zaman serisi (FNSPID),7.693 hisse dosyası,3.026 çağrı için tam 61+7 günlük pencere (1.055 şirket)
+Eşleşmiş (iki modalite tam),3.443 çağrı,"3.026 çağrı (%87,9); metni >5 kelime olan: 3.006"
