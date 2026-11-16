@@ -25,6 +25,13 @@ KAYNAKLAR = {
 }
 
 
+# 15 Kasım 2026'da indirilen dosyaların özetleri; farklı çıkarsa kaynak değişmiş demektir.
+BEKLENEN_SHA256 = {
+    "maec.zip": "3df6d7134b79f28b02c6161094837b71bb8101b9aa28d2874e18075731ff3f99",
+    "fnspid_full_history.zip": "03da4fce7ebea90d5715ba3501773d410ae663b617027b338ef000a9955dab91",
+}
+
+
 def sha256(yol):
     h = hashlib.sha256()
     with open(yol, "rb") as f:
@@ -44,7 +51,9 @@ def indir(ad, url):
             while parca := yanit.read(1 << 20):
                 f.write(parca)
         gecici.rename(hedef)  # yarım kalan indirme tam dosya sanılmasın
-    print(f"{ad}: {hedef.stat().st_size / 1e6:.1f} MB, sha256 {sha256(hedef)}")
+    ozet = sha256(hedef)
+    durum = "AYNI" if ozet == BEKLENEN_SHA256[ad] else "FARKLI (kaynak değişmiş olabilir)"
+    print(f"{ad}: {hedef.stat().st_size / 1e6:.1f} MB, sha256 {ozet} -> beklenenle {durum}")
 
 
 if __name__ == "__main__":
