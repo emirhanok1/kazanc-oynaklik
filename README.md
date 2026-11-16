@@ -28,6 +28,7 @@ pip install -r requirements.txt
 3. Notebook'ları sırayla çalıştır (Jupyter ile ya da komut satırından):
    ```
    python -m nbconvert --to notebook --execute --inplace notebooks/01_veri_edinme_eslestirme.ipynb
+   python -m nbconvert --to notebook --execute --inplace notebooks/02_temizlik_on_isleme.ipynb
    ```
    İlk çalıştırma SEC verisini indirdiği için ~20 dk, sonrakiler ~4 dk sürer.
 
@@ -35,7 +36,7 @@ pip install -r requirements.txt
 
 | Klasör | İçerik |
 |---|---|
-| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör) |
+| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör), `temizle.py` (metin temizliği, 60 × 3 fiyat girdisi) |
 | `notebooks/` | Her faz için bir notebook |
 | `sekiller/` | Rapordaki şekiller |
 | `cikti/` | Özet tablolar (veri kaybı dökümü, sınıf ve sektör dağılımı, veri özeti) |

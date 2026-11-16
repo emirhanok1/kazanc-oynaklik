@@ -1,0 +1,18 @@
+tür,modalite,sorun,ölçüm,karar
+Eksik veri,fiyat,ticker'ı FNSPID'de olmayan çağrı,411,Faz 1'de çıkarıldı
+Bozuk dosya,fiyat,"kesik dosya (SON, SAFM tek satır; SPN, SJI geç başlıyor)",6 çağrı,Faz 1'de çıkarıldı
+Eksik veri,fiyat,girdi/hedef penceresinde eksik gün ya da getiri,0,işlem gerekmez
+Eksik veri,metin,içeriksiz metin (≤ 20 kelime),26 çağrı,çıkarılır (Bölüm 2)
+Tekrar kayıt,metin,birebir aynı metin,"17 çağrı (hepsi ""Thank you."")",içeriksiz metin kuralıyla çıkar
+Tekrar kayıt,metin,aynı şirketin çağrı çiftlerinde en yüksek cümle benzerliği (Jaccard),"0,158 (Faz 1)",kopya yok; işlem gerekmez
+Kalite düşüklüğü,metin,"dökümcü notu ([indiscernible], (ph) …)",1136,silinir (Bölüm 3)
+Kalite düşüklüğü,metin,köşeli parantezli ekleme ([million] …),1867,"parantez kaldırılır, içerik kalır"
+Kalite düşüklüğü,metin,<UNK> (gizlenmiş kişi adı),29465,[NAME] olarak tekilleştirilir
+Kalite düşüklüğü,metin,tipografik karakter / HTML varlığı / URL,4503 / 1 / 161,düz karşılığa çevrilir / [URL]
+Aykırı değer,metin,"çok uzun ""cümle"" (cümle bölme hatası)",en uzun 472 kelime (%99: 59),korunur; model cümle sınırına dayanmıyor
+Aykırı değer,fiyat,"|günlük log getiri| > 0,4 (girdi + hedef)",10 gün,gerçek hareket (düzeltilmemiş kapanışta da aynı); korunur
+Kalite düşüklüğü,fiyat,hedef penceresinde ≥ 3 gün sıfır getiri,6 çağrı,işlem hacmi var; gerçek (Bölüm 4)
+Kalite düşüklüğü,fiyat,girdi penceresinin > %10'u sıfır getiri,25 çağrı,işlem hacmi var; gerçek (Bölüm 4)
+Kalite düşüklüğü,fiyat,"yüksek < düşük, kapanış aralık dışında, hacim 0/NaN",0,işlem gerekmez
+Etiket sorunu,etiket,"bir eşiğe 0,10 log biriminden yakın","673 çağrı (%22,2; Faz 1)",korunur; belirsizlik raporlanır
+Etiket sorunu,etiket,çağrı saati yok (BMO/AMC karışık),"|r0| > |r+1|: %56,5 (Faz 1)",hedef gün 0..+6 (kural C)
