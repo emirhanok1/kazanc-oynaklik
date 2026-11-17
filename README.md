@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 ## Çalıştırma
 
-1. Ham veriyi indir (~0,67 GB, sabit sürüm, SHA256 kontrollü):
+1. Ham veriyi ve sözlüğü indir (~0,68 GB, SHA256 kontrollü):
    ```
    python src/indir.py
    ```
@@ -29,6 +29,7 @@ pip install -r requirements.txt
    ```
    python -m nbconvert --to notebook --execute --inplace notebooks/01_veri_edinme_eslestirme.ipynb
    python -m nbconvert --to notebook --execute --inplace notebooks/02_temizlik_on_isleme.ipynb
+   python -m nbconvert --to notebook --execute --inplace notebooks/03_kesifsel_analiz.ipynb
    ```
    İlk çalıştırma SEC verisini indirdiği için ~20 dk, sonrakiler ~4 dk sürer.
 
@@ -36,7 +37,7 @@ pip install -r requirements.txt
 
 | Klasör | İçerik |
 |---|---|
-| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör), `temizle.py` (metin temizliği, 60 × 3 fiyat girdisi) |
+| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör), `temizle.py` (metin temizliği, 60 × 3 fiyat girdisi), `ozellik.py` (analiz için özet özellikler) |
 | `notebooks/` | Her faz için bir notebook |
 | `sekiller/` | Rapordaki şekiller |
 | `cikti/` | Özet tablolar (veri kaybı dökümü, sınıf ve sektör dağılımı, veri özeti) |
@@ -48,6 +49,7 @@ pip install -r requirements.txt
 |---|---|---|---|---|
 | Metin | [MAEC](https://github.com/Earnings-Call-Dataset/MAEC-A-Multimodal-Aligned-Earnings-Conference-Call-Dataset-for-Financial-Risk-Prediction) | commit `65a109f` | Li vd. (2020), CIKM, doi:10.1145/3340531.3412879 | CC BY-SA 4.0 |
 | Fiyat serisi | [FNSPID](https://huggingface.co/datasets/Zihan1004/FNSPID) `Stock_price/full_history.zip` | revizyon `bf9189c` | Dong vd. (2024), KDD, doi:10.1145/3637528.3671629 | CC BY-NC 4.0; fiyatların kökeni Yahoo Finance (yeniden dağıtılamaz) |
+| Yardımcı (sözlük) | [Loughran–McDonald Master Dictionary](https://sraf.nd.edu/loughranmcdonald-master-dictionary/) 1993–2025 | SHA256 kontrollü | Loughran ve McDonald (2011), doi:10.1111/j.1540-6261.2010.01625.x | Akademik araştırmada ücretsiz |
 | Yardımcı | SEC EDGAR (`company_tickers.json`, `submissions`) | erişim tarihi Kasım 2026 | — | Kimlik bildiren User-Agent, saniyede ≤ 10 istek |
 
 Ham veri bu repoda yeniden dağıtılmaz; yalnız indirme kodu paylaşılır. Çalışma ticari olmayan bir ders projesidir.

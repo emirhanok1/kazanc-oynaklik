@@ -1,6 +1,6 @@
-"""Ham veriyi indirir: MAEC (kazanç çağrısı metinleri) ve FNSPID (günlük fiyatlar).
+"""Ham veriyi indirir: MAEC (kazanç çağrısı metinleri), FNSPID (günlük fiyatlar) ve Loughran-McDonald sözlüğü.
 
-Her iki kaynak sabit bir sürüme (commit) bağlıdır; böylece aynı dosyalar yeniden indirilebilir.
+MAEC ve FNSPID sabit bir sürüme (commit) bağlıdır; sözlük, yayıncının Drive dosyasıdır (1993-2025 sürümü).
 İndirilen her dosyanın SHA256 özeti yazdırılır ve README'deki değerle karşılaştırılabilir.
 
 Çalıştırma (proje kökünden):  python src/indir.py
@@ -22,6 +22,8 @@ KAYNAKLAR = {
                 f"zip/{MAEC_COMMIT}",
     "fnspid_full_history.zip": f"https://huggingface.co/datasets/Zihan1004/FNSPID/resolve/{FNSPID_REVIZYON}/"
                                "Stock_price/full_history.zip",
+    # Loughran-McDonald Master Dictionary 1993-2025 (sraf.nd.edu; akademik araştırmada ücretsiz)
+    "lm_master.csv": "https://drive.google.com/uc?export=download&id=1iq2RUf8qGFEAk1g8wQntP3habOnR3fXF",
 }
 
 
@@ -29,6 +31,7 @@ KAYNAKLAR = {
 BEKLENEN_SHA256 = {
     "maec.zip": "3df6d7134b79f28b02c6161094837b71bb8101b9aa28d2874e18075731ff3f99",
     "fnspid_full_history.zip": "03da4fce7ebea90d5715ba3501773d410ae663b617027b338ef000a9955dab91",
+    "lm_master.csv": "e2d1328682bab7d2187684fb9f5420bb730401c9eefc00daf835edd203f4859d",
 }
 
 
