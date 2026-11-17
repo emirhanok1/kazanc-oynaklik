@@ -61,6 +61,7 @@ def ileri_kat(b, k):
     hedef penceresi doğrulamanın ilk gününe ulaşanlar eğitimden atılır (arındırma)."""
     D = b.bolum == "gelistirme"
     dog = D & (b.ileri_kat == k)
+    assert dog.any(), f"ileri kat {k} boş"
     bas = b.loc[dog, "t0"].min()
     egit = D & (b.t0 < bas) & (b.hedef_bitis < bas)
     return egit, dog
@@ -68,5 +69,6 @@ def ileri_kat(b, k):
 
 def kat_etiketleri(b, egit, maske):
     """Eşikler yalnız eğitim maskesindeki v'lerden; maske içindeki çağrıların sınıfı döner."""
+    assert not b.loc[egit | maske, "v"].isna().any(), "hedefi tanımsız çağrı var"
     esik = etiket.esikler(b.loc[egit, "v"])
     return etiket.siniflandir(b.loc[maske, "v"], esik).astype(int), esik

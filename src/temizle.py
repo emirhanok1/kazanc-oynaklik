@@ -12,8 +12,8 @@ import numpy as np
 
 MIN_KELIME = 20   # bu sayıya kadar (dahil) kelimeli metin içeriksiz sayılır: incelenen örneklerin hepsi selamlaşma/kapanış
 
-NOTLAR = re.compile(r"[\[\(]\s*(?:indiscernible|inaudible|ph|sic|laughter|crosstalk|technical difficult(?:y|ies)|audio gap)"
-                    r"[^\]\)]{0,30}[\]\)]", re.I)                      # [indiscernible], (ph), [laughter] ...
+NOTLAR = re.compile(r"[\[\(]\s*(?:indiscernible|inaudible|ph|sic|laughter|crosstalk|technical difficult(?:y|ies)|audio gap)\b"
+                    r"[^\]\)]{0,30}[\]\)]", re.I)          # [indiscernible], (ph) ...; \b sayesinde [physicians], (Phase 3) silinmez
 KOSELI = re.compile(r"\[(?!NAME\]|URL\])([^\]\[]{1,40})\]")              # [million] gibi dökümcü eklemeleri
 URL = re.compile(r"(?:https?://|www\.)\S+", re.I)
 UNK = re.compile(r"<UNK>")

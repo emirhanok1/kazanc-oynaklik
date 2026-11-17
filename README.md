@@ -53,8 +53,8 @@ pip install -r requirements.txt
 
 | Modalite | Kaynak | Sürüm | Yayın | Lisans / kısıt |
 |---|---|---|---|---|
-| Metin | [MAEC](https://github.com/Earnings-Call-Dataset/MAEC-A-Multimodal-Aligned-Earnings-Conference-Call-Dataset-for-Financial-Risk-Prediction) | commit `65a109f` | Li vd. (2020), CIKM, doi:10.1145/3340531.3412879 | CC BY-SA 4.0 |
-| Fiyat serisi | [FNSPID](https://huggingface.co/datasets/Zihan1004/FNSPID) `Stock_price/full_history.zip` | revizyon `bf9189c` | Dong vd. (2024), KDD, doi:10.1145/3637528.3671629 | CC BY-NC 4.0; fiyatların kökeni Yahoo Finance (yeniden dağıtılamaz) |
+| Metin | [MAEC](https://github.com/Earnings-Call-Dataset/MAEC-A-Multimodal-Aligned-Earnings-Conference-Call-Dataset-for-Financial-Risk-Prediction) | commit `65a109f` | Li vd. (2020), CIKM, doi:10.1145/3340531.3412879 | CC BY-SA 4.0; metinler Seeking Alpha'dan yazılı izinle alınmış (makale Böl. 3.1) |
+| Fiyat serisi | [FNSPID](https://huggingface.co/datasets/Zihan1004/FNSPID) `Stock_price/full_history.zip` | revizyon `bf9189c` | Dong vd. (2024), KDD, doi:10.1145/3637528.3671629 | CC BY-NC 4.0 (README'deki Temmuz 2025 duyurusu "tüm hakları serbest" diyerek bununla çelişiyor; tutucu olarak CC BY-NC uygulanır); fiyatların kökeni Yahoo Finance (yeniden dağıtılamaz) |
 | Yardımcı (sözlük) | [Loughran–McDonald Master Dictionary](https://sraf.nd.edu/loughranmcdonald-master-dictionary/) 1993–2025 | SHA256 kontrollü | Loughran ve McDonald (2011), doi:10.1111/j.1540-6261.2010.01625.x | Akademik araştırmada ücretsiz |
 | Yardımcı | SEC EDGAR (`company_tickers.json`, `submissions`) | erişim tarihi Kasım 2026 | — | Kimlik bildiren User-Agent, saniyede ≤ 10 istek |
 
@@ -63,6 +63,6 @@ Ham veri bu repoda yeniden dağıtılmaz; yalnız indirme kodu paylaşılır. Ç
 ## Sızıntıyı önleyen temel kurallar
 
 - Olay günü t0: çağrı tarihine eşit ya da sonraki ilk işlem günü.
-- Girdi: gün −60..−1 getirileri (gün −1 kapanışında biter). Hedef: gün 0..+6 getirileri. Hiçbir gün iki tarafta birden yer almaz.
+- Girdi: gün −60..−1 getirileri (fiyat günleri −61..−1; gün −1 kapanışında biter). Hedef: gün 0..+6 getirileri. Hiçbir gün iki tarafta birden yer almaz.
 - Sınıf eşikleri, ölçekleme ve metin sözlüğü yalnız eğitim kısmından öğrenilir.
-- Test dönemi (2017+) zamanca ayrıdır ve finalde bir kez kullanılır; model seçimi geliştirme döneminde (≤2016) şirkete göre gruplu 5 kat ve ileri (çeyrek) katlarla yapılır.
+- Test dönemi (2017+) zamanca ayrıdır ve finalde bir kez kullanılır; model seçimi geliştirme döneminde (≤2016) şirkete göre gruplu 5 katla yapılır; seçilen model ileri (çeyrek) katlarda da raporlanır.

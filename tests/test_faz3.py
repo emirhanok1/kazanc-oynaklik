@@ -78,7 +78,10 @@ def test_gecmis_oynaklik_ham_fiyattan(eda, pencere):
 
 
 def test_sozluk_sayimi_bagimsiz(eda, temiz):
-    sozluk = ozellik.lm_sozluk()
+    """Sözlük CSV'den ayrıca okunur (negatif yıl = kategoriden çıkarılmış kelime, sayılmaz)."""
+    lm = pd.read_csv(ozellik.LM_DOSYA, keep_default_na=False)
+    sozluk = {ad: set(lm.loc[lm[k] > 0, "Word"].str.lower())
+              for k, ad in [("Uncertainty", "belirsizlik"), ("Negative", "olumsuz"), ("Positive", "olumlu")]}
     t = eda.set_index("klasor")
     for k in t.index[[0, 500, 1000, 1500, 1865]]:
         kelimeler = re.findall(r"[a-z]+", " ".join(temiz.loc[k, "cumleler_temiz"]).lower().replace("[name]", " ").replace("[url]", " "))
@@ -93,6 +96,9 @@ def test_sozluk_kategorileri():
     assert {"uncertain", "uncertainty"} <= s["belirsizlik"]
     assert {"loss", "decline"} <= s["olumsuz"]
     assert "growth" not in s["olumsuz"]
+    # LM'de negatif yıllı (2020'de kategoriden çıkarılmış) kelimeler sayılmamalı
+    assert not {"great", "benefit", "effective"} & s["olumlu"]
+    assert not {"closed", "closing", "critical"} & s["olumsuz"]
 
 
 # ---------------------------------------------------------------- metin komşuları
@@ -114,7 +120,7 @@ def test_komsular(eda, temiz):
 
 def test_farkli_sektor_secenegi(eda, temiz):
     metinler = [" ".join(s) for s in temiz.loc[eda.klasor[:300], "cumleler_temiz"]]
-    g = eda.bolum.to_numpy()[:300]
+    g = eda.sektor.to_numpy()[:300]
     k, *_ = metin_komsulari(metinler, eda.ticker.to_numpy()[:300], K=5, haric_grup=g)
     ayni = (g[k] == g[:, None]) & (g[:, None] != "bilinmiyor")
     assert not ayni.any()

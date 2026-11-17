@@ -5,14 +5,14 @@ Eksik veri,fiyat,girdi/hedef penceresinde eksik gün ya da getiri,0,işlem gerek
 Eksik veri,metin,içeriksiz metin (≤ 20 kelime),26 çağrı,çıkarılır (Bölüm 2)
 Tekrar kayıt,metin,birebir aynı metin,"17 çağrı (hepsi ""Thank you."")",içeriksiz metin kuralıyla çıkar
 Tekrar kayıt,metin,aynı şirketin çağrı çiftlerinde en yüksek cümle benzerliği (Jaccard),"0,101 (> 0,5 olan çift: 0)",kopya yok; işlem gerekmez
-Kalite düşüklüğü,metin,"dökümcü notu ([indiscernible], (ph) …)",1136,silinir (Bölüm 3)
+Kalite düşüklüğü,metin,"dökümcü notu ([indiscernible], (ph) …)",1132,silinir (Bölüm 3)
 Kalite düşüklüğü,metin,köşeli parantezli ekleme ([million] …),1867,"parantez kaldırılır, içerik kalır"
 Kalite düşüklüğü,metin,<UNK> (gizlenmiş kişi adı),29465,[NAME] olarak tekilleştirilir
 Kalite düşüklüğü,metin,tipografik karakter / HTML varlığı / URL,4503 / 1 / 161,düz karşılığa çevrilir / [URL]
 Aykırı değer,metin,"çok uzun ""cümle"" (cümle bölme hatası)",en uzun 472 kelime (%99: 59),korunur; model cümle sınırına dayanmıyor
-Aykırı değer,fiyat,"|günlük log getiri| > 0,4: girdi penceresi (tümü) / hedef penceresi (geliştirme)",5 / 5 gün,gerçek hareket (düzeltilmemiş kapanışta da aynı); korunur
+Aykırı değer,fiyat,"|günlük log getiri| > 0,4: girdi penceresi (tümü) / hedef penceresi (geliştirme)",5 / 5 gün,incelenir (Bölüm 4); korunur
 Kalite düşüklüğü,fiyat,hedef penceresinde ≥ 3 gün sıfır getiri (geliştirme),2 çağrı,işlem hacmi var; gerçek (Bölüm 4)
 Kalite düşüklüğü,fiyat,girdi penceresinin > %10'u sıfır getiri,25 çağrı,işlem hacmi var; gerçek (Bölüm 4)
 Kalite düşüklüğü,fiyat,"yüksek < düşük, kapanış aralık dışında, hacim 0/NaN",0,işlem gerekmez
 Etiket sorunu,etiket,"bir eşiğe 0,10 log biriminden yakın (geliştirme)","446 çağrı (%23,6)",korunur; belirsizlik raporlanır
-Etiket sorunu,etiket,çağrı saati yok (BMO/AMC karışık; geliştirme),"|r0| > |r+1|: %56,6",hedef gün 0..+6 (kural C)
+Etiket sorunu,etiket,çağrı saati yok (BMO/AMC karışık; geliştirme),"|r0| > |r+1|: %56,6",hedef penceresi gün 0..+6 (Faz 1 Bölüm 4.2)

@@ -62,7 +62,7 @@ def sic_bolumu(sic):
 
 
 def sirket_bilgisi(tickerlar):
-    """Her ticker için cik, ad, eski adlar, sic, sic açıklaması, SIC bölümü. SEC listesinde yoksa yalnız ticker."""
+    """Her ticker için cik, ad, eski adlar, sic, sic açıklaması, SIC bölümü (sektor). SEC listesinde yoksa yalnız ticker."""
     KLASOR.mkdir(parents=True, exist_ok=True)
     liste = _onbellekli("company_tickers.json", "https://www.sec.gov/files/company_tickers.json")
     cik = {}
@@ -78,5 +78,5 @@ def sirket_bilgisi(tickerlar):
                         ["name", "sic", "sicDescription", "formerNames", "tickers"])
         satirlar.append({"ticker": t, "cik": cik[t], "ad": s["name"],
                          "eski_adlar": [f["name"] for f in (s["formerNames"] or [])],
-                         "sic": s["sic"], "sic_aciklama": s["sicDescription"], "bolum": sic_bolumu(s["sic"])})
+                         "sic": s["sic"], "sic_aciklama": s["sicDescription"], "sektor": sic_bolumu(s["sic"])})
     return pd.DataFrame(satirlar)

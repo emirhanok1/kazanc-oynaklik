@@ -5,11 +5,10 @@ from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS, TfidfVectorizer
 
 
 def kw(df, sutun, grup="sinif"):
-    """Kruskal–Wallis testi: (H, p, ε²). ε² = (H − k + 1) / (n − k); k = grup sayısı."""
+    """Kruskal–Wallis testi: (H, p, ε²). Etki büyüklüğü ε² = H / (n − 1); 0 = sınıflar arasında fark yok."""
     gruplar = [g[sutun].to_numpy() for _, g in df.groupby(grup)]
     H, p = stats.kruskal(*gruplar)
-    k, n = len(gruplar), len(df)
-    return H, p, (H - k + 1) / (n - k)
+    return H, p, H / (len(df) - 1)
 
 
 def kismi(df, x, y, kontrol):

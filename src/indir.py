@@ -55,8 +55,10 @@ def indir(ad, url):
                 f.write(parca)
         gecici.rename(hedef)  # yarım kalan indirme tam dosya sanılmasın
     ozet = sha256(hedef)
-    durum = "AYNI" if ozet == BEKLENEN_SHA256[ad] else "FARKLI (kaynak değişmiş olabilir)"
-    print(f"{ad}: {hedef.stat().st_size / 1e6:.1f} MB, sha256 {ozet} -> beklenenle {durum}")
+    print(f"{ad}: {hedef.stat().st_size / 1e6:.1f} MB, sha256 {ozet}")
+    if ozet != BEKLENEN_SHA256[ad]:
+        raise RuntimeError(f"{ad}: SHA256 beklenenden farklı; dosya bozuk ya da kaynak değişmiş. Dosyayı silip yeniden indirin.")
+    print(f"{ad}: beklenen özetle AYNI")
 
 
 if __name__ == "__main__":

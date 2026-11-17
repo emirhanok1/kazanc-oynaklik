@@ -20,9 +20,11 @@ SAYI = re.compile(r"\$?\d[\d,.]*%?")
 
 
 def lm_sozluk():
-    """Loughran-McDonald kategorileri: kategori adı -> küçük harfli kelime kümesi (sütun değeri 0 değilse üye)."""
+    """Loughran-McDonald kategorileri: kategori adı -> küçük harfli kelime kümesi.
+    Sütun değeri kelimenin kategoriye eklendiği yıldır; yalnız pozitif değerliler alınır
+    (negatif değerli 19 kelime, ör. GREAT = -2020, kategoride sayılmaz)."""
     d = pd.read_csv(LM_DOSYA, usecols=["Word"] + list(LM_KATEGORI), keep_default_na=False)
-    return {ad: set(d.loc[d[k] != 0, "Word"].str.lower()) for k, ad in LM_KATEGORI.items()}
+    return {ad: set(d.loc[d[k] > 0, "Word"].str.lower()) for k, ad in LM_KATEGORI.items()}
 
 
 def metin_ozellikleri(cumle_listeleri, sozluk):

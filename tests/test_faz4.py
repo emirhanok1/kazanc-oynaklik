@@ -55,6 +55,8 @@ def test_esikler_yalniz_egitimden(b):
 def test_ileri_katlar(b):
     for k, q in enumerate(["2016Q1", "2016Q2", "2016Q3", "2016Q4"]):
         egit, dog = bolme.ileri_kat(b, k)
+        assert egit.sum() > 0 and dog.sum() > 0, f"ileri kat {k} boş"
+        assert dog.sum() == ((b.bolum == "gelistirme") & (b.ceyrek == q)).sum(), "çeyreğin bütün çağrıları doğrulamada"
         bas = b.loc[dog, "t0"].min()
         assert (b.loc[dog, "ceyrek"] == q).all()
         assert (b.loc[egit, "t0"] < bas).all(), "eğitim doğrulamadan önce"
@@ -68,6 +70,25 @@ def test_modalite_hizasi(b):
     assert (b.klasor.to_numpy() == temiz.klasor.to_numpy()).all()
     assert (b.klasor.to_numpy() == z["klasor"]).all()
     assert z["X"].shape == (len(b), 60, 3)
+
+
+def test_hedef_ve_girdi_hizasi():
+    """Kural 1–2 ham düzeltilmiş kapanıştan bağımsız hesapla sınanır: gün 0 = t0 (çağrı tarihi ya da sonraki ilk
+    işlem günü, en çok 5 gün), gün −1 çağrıdan önce; v = ln(std(r0..r+6), ddof=0); girdi getirisi = r−60..r−1."""
+    temiz = pd.read_parquet(ISL / "temiz_cagrilar.parquet").set_index("klasor")
+    p = pd.read_parquet(ISL / "fiyat_pencereleri.parquet", columns=["klasor", "gun", "date", "adj close"])
+    p = p[p.klasor.isin(temiz.index) & p.gun.between(-61, 6)]
+    tarih = p.pivot(index="klasor", columns="gun", values="date").loc[temiz.index]
+    assert (tarih[0] == temiz.t0).all()
+    assert (temiz.t0 >= temiz.tarih).all() and ((temiz.t0 - temiz.tarih).dt.days <= 5).all()
+    assert (tarih[-1] < temiz.tarih).all(), "girdinin son günü çağrıdan önce"
+    P = p.pivot(index="klasor", columns="gun", values="adj close").loc[temiz.index].to_numpy()
+    assert P.shape[1] == 68 and not np.isnan(P).any()
+    r = np.diff(np.log(P), axis=1)                      # sütunlar: gün −60..+6
+    assert np.allclose(np.log(r[:, 60:].std(axis=1)), temiz.v.to_numpy(), atol=1e-9)
+    z = np.load(ISL / "seri_girdisi.npz", allow_pickle=True)
+    assert (z["klasor"] == temiz.index.to_numpy()).all()
+    assert np.allclose(z["X"][:, :, 0], r[:, :60], atol=1e-6)
 
 
 def test_bolme_tekrarlanabilir(b):
