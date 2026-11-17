@@ -30,6 +30,7 @@ pip install -r requirements.txt
    python -m nbconvert --to notebook --execute --inplace notebooks/01_veri_edinme_eslestirme.ipynb
    python -m nbconvert --to notebook --execute --inplace notebooks/02_temizlik_on_isleme.ipynb
    python -m nbconvert --to notebook --execute --inplace notebooks/03_kesifsel_analiz.ipynb
+   python -m nbconvert --to notebook --execute --inplace notebooks/04_bolme_sizinti.ipynb
    ```
    İlk çalıştırma SEC verisini indirdiği için ~20 dk, sonrakiler toplam ~8 dk sürer.
 4. Testleri çalıştır (notebook çıktılarını bağımsız yeniden hesaplamayla karşılaştırır, sızıntı kurallarını sınar):
@@ -41,7 +42,7 @@ pip install -r requirements.txt
 
 | Klasör | İçerik |
 |---|---|
-| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör), `temizle.py` (metin temizliği, 60 × 3 fiyat girdisi), `ozellik.py` (analiz için özet özellikler), `istatistik.py` (kısmi korelasyon, önyükleme, metin komşuları) |
+| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör), `temizle.py` (metin temizliği, 60 × 3 fiyat girdisi), `ozellik.py` (analiz için özet özellikler), `istatistik.py` (kısmi korelasyon, önyükleme, metin komşuları), `bolme.py` (test ayrımı, şirket ve ileri katlar) |
 | `notebooks/` | Her faz için bir notebook |
 | `tests/` | Doğrulama testleri (pytest) |
 | `sekiller/` | Rapordaki şekiller |
@@ -64,3 +65,4 @@ Ham veri bu repoda yeniden dağıtılmaz; yalnız indirme kodu paylaşılır. Ç
 - Olay günü t0: çağrı tarihine eşit ya da sonraki ilk işlem günü.
 - Girdi: gün −60..−1 getirileri (gün −1 kapanışında biter). Hedef: gün 0..+6 getirileri. Hiçbir gün iki tarafta birden yer almaz.
 - Sınıf eşikleri, ölçekleme ve metin sözlüğü yalnız eğitim kısmından öğrenilir.
+- Test dönemi (2017+) zamanca ayrıdır ve finalde bir kez kullanılır; model seçimi geliştirme döneminde (≤2016) şirkete göre gruplu 5 kat ve ileri (çeyrek) katlarla yapılır.
