@@ -31,14 +31,19 @@ pip install -r requirements.txt
    python -m nbconvert --to notebook --execute --inplace notebooks/02_temizlik_on_isleme.ipynb
    python -m nbconvert --to notebook --execute --inplace notebooks/03_kesifsel_analiz.ipynb
    ```
-   İlk çalıştırma SEC verisini indirdiği için ~20 dk, sonrakiler ~4 dk sürer.
+   İlk çalıştırma SEC verisini indirdiği için ~20 dk, sonrakiler toplam ~8 dk sürer.
+4. Testleri çalıştır (notebook çıktılarını bağımsız yeniden hesaplamayla karşılaştırır, sızıntı kurallarını sınar):
+   ```
+   python -m pytest tests -q
+   ```
 
 ## Klasörler
 
 | Klasör | İçerik |
 |---|---|
-| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör), `temizle.py` (metin temizliği, 60 × 3 fiyat girdisi), `ozellik.py` (analiz için özet özellikler) |
+| `src/` | Ortak kod: `indir.py` (ham veri), `veri.py` (okuma), `eslestir.py` (çağrı–fiyat eşleştirme), `etiket.py` (oynaklık ve sınıflar), `sec.py` (şirket adı/sektör), `temizle.py` (metin temizliği, 60 × 3 fiyat girdisi), `ozellik.py` (analiz için özet özellikler), `istatistik.py` (kısmi korelasyon, önyükleme, metin komşuları) |
 | `notebooks/` | Her faz için bir notebook |
+| `tests/` | Doğrulama testleri (pytest) |
 | `sekiller/` | Rapordaki şekiller |
 | `cikti/` | Özet tablolar (veri kaybı dökümü, sınıf ve sektör dağılımı, veri özeti) |
 | `veri/` | Ham ve işlenmiş veri; repoda yok, kodla yeniden üretilir |
