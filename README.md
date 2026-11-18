@@ -32,7 +32,7 @@ pip install -r requirements.txt
    python -m nbconvert --to notebook --execute --inplace notebooks/03_kesifsel_analiz.ipynb
    python -m nbconvert --to notebook --execute --inplace notebooks/04_bolme_sizinti.ipynb
    ```
-   İlk çalıştırma SEC verisini indirdiği için ~20 dk, sonrakiler toplam ~8 dk sürer.
+   İlk çalıştırmada NB01, SEC verisini indirdiği için ~20 dk sürer; sonraki çalıştırmalarda dört notebook toplam ~6–7 dk.
 4. Testleri çalıştır (notebook çıktılarını bağımsız yeniden hesaplamayla karşılaştırır, sızıntı kurallarını sınar):
    ```
    python -m pytest tests -q
@@ -54,7 +54,7 @@ pip install -r requirements.txt
 | Modalite | Kaynak | Sürüm | Yayın | Lisans / kısıt |
 |---|---|---|---|---|
 | Metin | [MAEC](https://github.com/Earnings-Call-Dataset/MAEC-A-Multimodal-Aligned-Earnings-Conference-Call-Dataset-for-Financial-Risk-Prediction) | commit `65a109f` | Li vd. (2020), CIKM, doi:10.1145/3340531.3412879 | CC BY-SA 4.0; metinler Seeking Alpha'dan yazılı izinle alınmış (makale Böl. 3.1) |
-| Fiyat serisi | [FNSPID](https://huggingface.co/datasets/Zihan1004/FNSPID) `Stock_price/full_history.zip` | revizyon `bf9189c` | Dong vd. (2024), KDD, doi:10.1145/3637528.3671629 | CC BY-NC 4.0 (README'deki Temmuz 2025 duyurusu "tüm hakları serbest" diyerek bununla çelişiyor; tutucu olarak CC BY-NC uygulanır); fiyatların kökeni Yahoo Finance (yeniden dağıtılamaz) |
+| Fiyat serisi | [FNSPID](https://huggingface.co/datasets/Zihan1004/FNSPID) `Stock_price/full_history.zip` | revizyon `bf9189c` | Dong vd. (2024), KDD, doi:10.1145/3637528.3671629 | CC BY-NC 4.0 (FNSPID GitHub deposunun README'sindeki 24.07.2025 duyurusu, "All the right for commercial use and research use are released", bununla çelişiyor; tutucu olarak CC BY-NC 4.0 uygulanır); fiyatların kökeni Yahoo Finance (yeniden dağıtılamaz) |
 | Yardımcı (sözlük) | [Loughran–McDonald Master Dictionary](https://sraf.nd.edu/loughranmcdonald-master-dictionary/) 1993–2025 | SHA256 kontrollü | Loughran ve McDonald (2011), doi:10.1111/j.1540-6261.2010.01625.x | Akademik araştırmada ücretsiz |
 | Yardımcı | SEC EDGAR (`company_tickers.json`, `submissions`) | erişim tarihi Kasım 2026 | — | Kimlik bildiren User-Agent, saniyede ≤ 10 istek |
 

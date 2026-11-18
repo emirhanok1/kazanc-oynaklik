@@ -13,7 +13,7 @@ def kw(df, sutun, grup="sinif"):
 
 def kismi(df, x, y, kontrol):
     """Kısmi Spearman korelasyonu: değişkenler sıraya çevrilir, x ve y kontrol değişkenlerine
-    doğrusal regresyonla arındırılır, artıkların Pearson korelasyonu döner."""
+    doğrusal regresyonla çıkarılır (artıklar alınır), artıkların Pearson korelasyonu döner."""
     R = lambda s: stats.rankdata(s)
     Z = np.column_stack([np.ones(len(df))] + [R(df[c]) for c in kontrol])
     rx = R(df[x]) - Z @ np.linalg.lstsq(Z, R(df[x]), rcond=None)[0]

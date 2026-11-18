@@ -14,5 +14,5 @@ Aykırı değer,fiyat,"|günlük log getiri| > 0,4: girdi penceresi (tümü) / h
 Kalite düşüklüğü,fiyat,hedef penceresinde ≥ 3 gün sıfır getiri (geliştirme),2 çağrı,işlem hacmi var; gerçek (Bölüm 4)
 Kalite düşüklüğü,fiyat,girdi penceresinin > %10'u sıfır getiri,25 çağrı,işlem hacmi var; gerçek (Bölüm 4)
 Kalite düşüklüğü,fiyat,"yüksek < düşük, kapanış aralık dışında, hacim 0/NaN",0,işlem gerekmez
-Etiket sorunu,etiket,"bir eşiğe 0,10 log biriminden yakın (geliştirme)","446 çağrı (%23,6)",korunur; belirsizlik raporlanır
-Etiket sorunu,etiket,çağrı saati yok (BMO/AMC karışık; geliştirme),"|r0| > |r+1|: %56,6",hedef penceresi gün 0..+6 (Faz 1 Bölüm 4.2)
+Etiket sorunu,etiket,"bir eşiğe 0,10 log biriminden yakın (geliştirme; temizlik öncesi, Faz 1 eşikleri)","446 çağrı (%23,6)",korunur; belirsizlik raporlanır
+Etiket sorunu,etiket,"çağrı saati yok (BMO/AMC karışık; geliştirme, temizlik öncesi)","|r0| > |r+1|: %56,6",hedef penceresi gün 0..+6 (Faz 1 Bölüm 4.2)
